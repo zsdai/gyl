@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<!-- 
+	class代表持久化类
+		   name持久化类的全名
+		   table 持久化类对应的表名  默认类名
+		   catalog 数据库的名字  一般不写
+ -->
+ <class name="com.myself.gyl.domain.basedata.User">
+ 	<id name="uid" length="10">
+ 		<generator class="increment"></generator>
+ 	</id>
+ 	<property name="username" length="20"/>
+ 	<property name="password" length="10"/>
+ 	<property name="sex" length="5"/>
+ 	<property name="phone" length="11"/>
+ 	<property name="email" length="30"/>
+	<!-- 
+	column 代表外键
+ 	-->
+ 	<many-to-one name="department" column="did" class="com.myself.gyl.domain.basedata.Department"/>
+ 	<!-- 用户与角色 多对多-->
+ 	<set name="roles" table="user_role">
+ 		<key>
+ 			<column name="uid"></column>
+ 		</key>
+ 		<many-to-many class="com.myself.gyl.domain.privilege.Role" column="rid"/>
+ 	</set>
+ </class>
+</hibernate-mapping>

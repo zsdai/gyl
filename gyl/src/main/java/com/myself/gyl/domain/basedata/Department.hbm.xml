@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<!-- 
+	class代表持久化类
+		   name持久化类的全名
+		   table 持久化类对应的表名  默认类名
+		   catalog 数据库的名字  一般不写
+ -->
+ <class name="com.myself.gyl.domain.basedata.Department" table="department">
+ <!-- 
+			主键
+			   name为属性的名称
+			   type为类型
+			   length指的是数据库中相应的字段的长度
+			   column为对应的列的名称   可以不写，默认就是属性的名称
+		 -->
+		 <id name="did" type="java.lang.Long" length="10">
+		 	<!-- 主键生成器 -->
+		 	<generator class="increment"></generator>
+		 </id>
+		 <!-- 
+			一般字段
+		 -->
+		<property name="name" type="java.lang.String" length="20"></property>
+		<property name="description" length="50"></property>
+		<!-- 
+			set元素描述了一个集合
+			  name就是属性的名称
+			  cascade 级联
+			     all
+			  	 delete
+			     save-update
+			                   在保存或者更新班级的时候，对student进行操作
+			  inverse  是否维护关系 :classes是否维护classes与student之间的关系
+			             关系操作
+			     true   不维护关系
+			     false  维护关系
+			     default:false
+		 -->
+		<set name="users" inverse="true">
+			<!-- 
+				外键
+				    hibernate内部会通过外键生成sql语句
+			 -->
+			<key column="did"></key>
+			<one-to-many class="com.myself.gyl.domain.basedata.User"/>
+		</set>
+ </class>
+</hibernate-mapping>
